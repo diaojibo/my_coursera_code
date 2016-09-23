@@ -17,7 +17,13 @@ fun all_except_option (s,sl) =
                  NONE => NONE
               | SOME l => SOME(x::l)
     )
-
+fun get_substitutions1 (sll,st) =
+  case sll of
+      [] => []
+    | s::st' => ( case all_except_option(st,s) of
+                      NONE => get_substitutions1(st',st)
+                    | SOME sl => sl @ get_substitutions1(st',st)
+                )
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
